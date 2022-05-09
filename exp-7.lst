@@ -1,0 +1,162 @@
+SQL> create table orders(o_id number(5),ordernum number(5),p_id_num number(3));
+
+Table created.
+
+SQL> desc orders
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ O_ID                                               NUMBER(5)
+ ORDERNUM                                           NUMBER(5)
+ P_ID_NUM                                           NUMBER(3)
+
+SQL> insert into orders values(&o_id,&ordernum,&p_id_num);
+Enter value for o_id: 1
+Enter value for ordernum: 77895
+Enter value for p_id_num: 3
+old   1: insert into orders values(&o_id,&ordernum,&p_id_num)
+new   1: insert into orders values(1,77895,3)
+
+1 row created.
+
+SQL> /
+Enter value for o_id: 2
+Enter value for ordernum: 44678
+Enter value for p_id_num: 3
+old   1: insert into orders values(&o_id,&ordernum,&p_id_num)
+new   1: insert into orders values(2,44678,3)
+
+1 row created.
+
+SQL> /
+Enter value for o_id: 3
+Enter value for ordernum: 22456
+Enter value for p_id_num: 1
+old   1: insert into orders values(&o_id,&ordernum,&p_id_num)
+new   1: insert into orders values(3,22456,1)
+
+1 row created.
+
+SQL> /
+Enter value for o_id: 4
+Enter value for ordernum: 24562
+Enter value for p_id_num: 1
+old   1: insert into orders values(&o_id,&ordernum,&p_id_num)
+new   1: insert into orders values(4,24562,1)
+
+1 row created.
+
+SQL> /
+Enter value for o_id: 5
+Enter value for ordernum: 34764
+Enter value for p_id_num: 15
+old   1: insert into orders values(&o_id,&ordernum,&p_id_num)
+new   1: insert into orders values(5,34764,15)
+
+1 row created.
+
+SQL> select * from orders;
+
+      O_ID   ORDERNUM   P_ID_NUM                                                
+---------- ---------- ----------                                                
+         1      77895          3                                                
+         2      44678          3                                                
+         3      22456          1                                                
+         4      24562          1                                                
+         5      34764         15                                                
+
+SQL> create table persons(p_id_num number(5),lastname varchar2(10),firstname varchar2(15),address varchar2(20),city varchar2(10));
+
+Table created.
+
+SQL> insert into persons values(&p_id_num,'&lastname','&firstname','&address','&city');
+Enter value for p_id_num: 1
+Enter value for lastname: hansen
+Enter value for firstname: ola
+Enter value for address: timoteivn 10
+Enter value for city: sadnes
+old   1: insert into persons values(&p_id_num,'&lastname','&firstname','&address','&city')
+new   1: insert into persons values(1,'hansen','ola','timoteivn 10','sadnes')
+
+1 row created.
+
+SQL> /
+Enter value for p_id_num: 2
+Enter value for lastname: svendson
+Enter value for firstname: tove
+Enter value for address: borgn 23
+Enter value for city: sadnes
+old   1: insert into persons values(&p_id_num,'&lastname','&firstname','&address','&city')
+new   1: insert into persons values(2,'svendson','tove','borgn 23','sadnes')
+
+1 row created.
+
+SQL> /
+Enter value for p_id_num: 3
+Enter value for lastname: pettersen
+Enter value for firstname: kari
+Enter value for address: storgt 20
+Enter value for city: stavanger
+old   1: insert into persons values(&p_id_num,'&lastname','&firstname','&address','&city')
+new   1: insert into persons values(3,'pettersen','kari','storgt 20','stavanger')
+
+1 row created.
+
+SQL> select * from persons;
+
+  P_ID_NUM LASTNAME   FIRSTNAME       ADDRESS              CITY                 
+---------- ---------- --------------- -------------------- ----------           
+         1 hansen     ola             timoteivn 10         sadnes               
+         2 svendson   tove            borgn 23             sadnes               
+         3 pettersen  kari            storgt 20            stavanger            
+
+SQL> select persons.firstname,persons.lastname,persons.address,orders.ordernum from persons left join orders on person.p_id_num=orders.p_id_num
+  2  select persons.firstname,persons.lastname,persons.address,orders.ordernum from persons left join orders on persons.p_id_num=orders.p_id_num;
+select persons.firstname,persons.lastname,persons.address,orders.ordernum from persons left join orders on persons.p_id_num=orders.p_id_num
+*
+ERROR at line 2:
+ORA-00933: SQL command not properly ended 
+
+
+SQL> select persons.firstname,persons.lastname,persons.address,orders.ordernum from persons left join orders on persons.p_id_num=orders.p_id_num;
+
+FIRSTNAME       LASTNAME   ADDRESS                ORDERNUM                      
+--------------- ---------- -------------------- ----------                      
+kari            pettersen  storgt 20                 77895                      
+kari            pettersen  storgt 20                 44678                      
+ola             hansen     timoteivn 10              22456                      
+ola             hansen     timoteivn 10              24562                      
+tove            svendson   borgn 23                                             
+
+SQL> select persons.firstname,persons.lastname,persons.address,orders.ordernum from persons full outer join orders on persons.p_id_num=orders.p_id_num;
+
+FIRSTNAME       LASTNAME   ADDRESS                ORDERNUM                      
+--------------- ---------- -------------------- ----------                      
+kari            pettersen  storgt 20                 77895                      
+kari            pettersen  storgt 20                 44678                      
+ola             hansen     timoteivn 10              22456                      
+ola             hansen     timoteivn 10              24562                      
+                                                     34764                      
+tove            svendson   borgn 23                                             
+
+6 rows selected.
+
+SQL> select persons.firstname,persons.lastname,persons.address,orders.ordernum from persons right outer join orders on persons.p_id_num=orders.p_id_num;
+
+FIRSTNAME       LASTNAME   ADDRESS                ORDERNUM                      
+--------------- ---------- -------------------- ----------                      
+ola             hansen     timoteivn 10              22456                      
+ola             hansen     timoteivn 10              24562                      
+kari            pettersen  storgt 20                 77895                      
+kari            pettersen  storgt 20                 44678                      
+                                                     34764                      
+
+SQL> select persons.firstname,persons.lastname,persons.address,orders.ordernum from persons inner join orders on persons.p_id_num=orders.p_id_num;
+
+FIRSTNAME       LASTNAME   ADDRESS                ORDERNUM                      
+--------------- ---------- -------------------- ----------                      
+kari            pettersen  storgt 20                 77895                      
+kari            pettersen  storgt 20                 44678                      
+ola             hansen     timoteivn 10              22456                      
+ola             hansen     timoteivn 10              24562                      
+
+SQL> spool off

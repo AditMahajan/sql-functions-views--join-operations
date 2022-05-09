@@ -1,0 +1,302 @@
+SQL> create table employee
+  2  (empno int,name varchar2(20),job varchar2(20),deptno number,sal number);
+create table employee
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> desc employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMPNO                                              NUMBER(38)
+ NAME                                               VARCHAR2(20)
+ JOB                                                VARCHAR2(20)
+ DEPTNO                                             NUMBER
+ SAL                                                NUMBER
+
+SQL> insert into employee values(&empno,'&name','&job',&deptno,&sal);
+Enter value for empno: 497
+Enter value for name: adit
+Enter value for job: ap
+Enter value for deptno: 001
+Enter value for sal: 50000
+old   1: insert into employee values(&empno,'&name','&job',&deptno,&sal)
+new   1: insert into employee values(497,'adit','ap',001,50000)
+
+1 row created.
+
+SQL> insert into employee values(&empno,'&name','&job',&deptno,&sal);
+Enter value for empno: 498
+Enter value for name: yash
+Enter value for job: asp
+Enter value for deptno: 002
+Enter value for sal: 60000
+old   1: insert into employee values(&empno,'&name','&job',&deptno,&sal)
+new   1: insert into employee values(498,'yash','asp',002,60000)
+
+1 row created.
+
+SQL> insert into employee values(&empno,'&name','&job',&deptno,&sal);
+Enter value for empno: 499
+Enter value for name: ritvik
+Enter value for job: asp
+Enter value for deptno: 003
+Enter value for sal: 20000
+old   1: insert into employee values(&empno,'&name','&job',&deptno,&sal)
+new   1: insert into employee values(499,'ritvik','asp',003,20000)
+
+1 row created.
+
+SQL> insert into employee values(&empno,'&name','&job',&deptno,&sal);
+Enter value for empno: 111
+Enter value for name: kartik
+Enter value for job: prof
+Enter value for deptno: 169
+Enter value for sal: 10000
+old   1: insert into employee values(&empno,'&name','&job',&deptno,&sal)
+new   1: insert into employee values(111,'kartik','prof',169,10000)
+
+1 row created.
+
+SQL> select ascii('A') from dual;
+
+ASCII('A')                                                                      
+----------                                                                      
+        65                                                                      
+
+SQL> select ascii('a') from dual;
+
+ASCII('A')                                                                      
+----------                                                                      
+        97                                                                      
+
+SQL> select ascii('s9') from dual;
+
+ASCII('S9')                                                                     
+-----------                                                                     
+        115                                                                     
+
+SQL> select chr(65),chr(97) from dual;
+
+C C                                                                             
+- -                                                                             
+A a                                                                             
+
+SQL> select concat('name','sir')name from employee;
+
+NAME                                                                            
+-------                                                                         
+namesir                                                                         
+namesir                                                                         
+namesir                                                                         
+namesir                                                                         
+
+SQL> select concat('Fname','sir')name from employee;
+
+NAME                                                                            
+--------                                                                        
+Fnamesir                                                                        
+Fnamesir                                                                        
+Fnamesir                                                                        
+Fnamesir                                                                        
+
+SQL> select concat('Fname','sir')employee_name from employee;
+
+EMPLOYEE                                                                        
+--------                                                                        
+Fnamesir                                                                        
+Fnamesir                                                                        
+Fnamesir                                                                        
+Fnamesir                                                                        
+
+SQL> select initcap('oracle tutorial') from dual;
+
+INITCAP('ORACLE                                                                 
+---------------                                                                 
+Oracle Tutorial                                                                 
+
+SQL> select instr('Character','r',1,1) pos1,instr('Character','r',1,2) pos2,instr('Character','a',-1,2) from dual;
+
+      POS1       POS2 INSTR('CHARACTER','A',-1,2)                               
+---------- ---------- ---------------------------                               
+         4          9                           3                               
+
+SQL> select instr('Character','r',1,1) pos1,instr('Character','r',1,2) pos2,instr('Character','a',-1,2) pos3 from dual;
+
+      POS1       POS2       POS3                                                
+---------- ---------- ----------                                                
+         4          9          3                                                
+
+SQL> select length('Sql Tutorial') as len from dual;
+
+       LEN                                                                      
+----------                                                                      
+        12                                                                      
+
+SQL> select * from employee;
+
+     EMPNO NAME                 JOB                      DEPTNO        SAL      
+---------- -------------------- -------------------- ---------- ----------      
+       497 adit                 ap                            1      50000      
+       498 yash                 asp                           2      60000      
+       499 ritvik               asp                           3      20000      
+       111 kartik               prof                        169      10000      
+
+SQL> select upper(name) from employee;
+
+UPPER(NAME)                                                                     
+--------------------                                                            
+ADIT                                                                            
+YASH                                                                            
+RITVIK                                                                          
+KARTIK                                                                          
+
+SQL> select lower(name) from employee;
+
+LOWER(NAME)                                                                     
+--------------------                                                            
+adit                                                                            
+yash                                                                            
+ritvik                                                                          
+kartik                                                                          
+
+SQL> select lpad('Oracle',10,'.')lpad_doted from dual;
+
+LPAD_DOTED                                                                      
+----------                                                                      
+....Oracle                                                                      
+
+SQL> select lpad('RAM',7)lpad_exa from dual;
+
+LPAD_EX                                                                         
+-------                                                                         
+    RAM                                                                         
+
+SQL> select rpad('Oracle',10,'.')rpad_doted from dual;
+
+RPAD_DOTED                                                                      
+----------                                                                      
+Oracle....                                                                      
+
+SQL> select rpad('RAM',7)rpad_exa from dual;
+
+RPAD_EX                                                                         
+-------                                                                         
+RAM                                                                             
+
+SQL> select ltrim('....ra1911003010497') from dual;
+
+LTRIM('....RA191100                                                             
+-------------------                                                             
+....ra1911003010497                                                             
+
+SQL> select ltrim('   ra1911003010497') from dual;
+
+LTRIM('RA191100                                                                 
+---------------                                                                 
+ra1911003010497                                                                 
+
+SQL> select rtrim('ra1911003010497   ') from dual;
+
+RTRIM('RA191100                                                                 
+---------------                                                                 
+ra1911003010497                                                                 
+
+SQL> select replace('Oracle','Ora','Arti')replace_exa from dual;
+
+REPLACE                                                                         
+-------                                                                         
+Article                                                                         
+
+SQL> select abs(-25)"Abs" from dual;
+
+       Abs                                                                      
+----------                                                                      
+        25                                                                      
+
+SQL> select acos(.28)"Arc_cosine" from dual;
+
+Arc_cosine                                                                      
+----------                                                                      
+1.28700222                                                                      
+
+SQL> select asin(.6)"Arc_sine" from dual;
+
+  Arc_sine                                                                      
+----------                                                                      
+.643501109                                                                      
+
+SQL> select atan(.6)"Arc_tan" from dual;
+
+   Arc_tan                                                                      
+----------                                                                      
+  .5404195                                                                      
+
+SQL> select ceil(239.8) from dual;
+
+CEIL(239.8)                                                                     
+-----------                                                                     
+        240                                                                     
+
+SQL> select floor(15.65)"Floor" from dual;
+
+     Floor                                                                      
+----------                                                                      
+        15                                                                      
+
+SQL> select mod(11,3)"Mod" from dual;
+
+       Mod                                                                      
+----------                                                                      
+         2                                                                      
+
+SQL> select power(3,8)"Power" from dual;
+
+     Power                                                                      
+----------                                                                      
+      6561                                                                      
+
+SQL> select round(43.698,1)"Round" from dual;
+
+     Round                                                                      
+----------                                                                      
+      43.7                                                                      
+
+SQL> select trunc(12.75,-1)"Trunc" from dual;
+
+     Trunc                                                                      
+----------                                                                      
+        10                                                                      
+
+SQL> select sysdate,add_months(sysdate,2) from dual;
+
+SYSDATE   ADD_MONTH                                                             
+--------- ---------                                                             
+16-FEB-22 16-APR-22                                                             
+
+SQL> select sysdate,extract(year from sysdate)year,extract(day from sysdate)day,extract(timezone_hour from systimestamp)tzh from dual;
+
+SYSDATE         YEAR        DAY        TZH                                      
+--------- ---------- ---------- ----------                                      
+16-FEB-22       2022         16          0                                      
+
+SQL> select next_day('31-Aug-18','sun')"First Monday of september" from dual;
+
+First Mon                                                                       
+---------                                                                       
+02-SEP-18                                                                       
+
+SQL> select sysdate,round(sysdate,'mm'),round(sysdate,'yyyy') from dual;
+
+SYSDATE   ROUND(SYS ROUND(SYS                                                   
+--------- --------- ---------                                                   
+16-FEB-22 01-MAR-22 01-JAN-22                                                   
+
+SQL> select months_between('01-jan-2017','11-dec-2021') from dual;
+
+MONTHS_BETWEEN('01-JAN-2017','11-DEC-2021')                                     
+-------------------------------------------                                     
+                                 -59.322581                                     
+
+SQL> spool off

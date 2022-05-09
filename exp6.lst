@@ -1,0 +1,158 @@
+SQL> create table employee3(ename varchar2(20),enum number(8),deptname varchar2(20),deptnum number(5));
+
+Table created.
+
+SQL> insert into employee3 values('ravi',124,'ece',89);
+
+1 row created.
+
+SQL> /
+
+1 row created.
+
+SQL> insert into employee3 values('vijay',345,'cse',21);
+
+1 row created.
+
+SQL> insert into employee3 values('raj',98,'it',22);
+
+1 row created.
+
+SQL> select * from employee3;
+
+ENAME                      ENUM DEPTNAME                DEPTNUM                 
+-------------------- ---------- -------------------- ----------                 
+ravi                        124 ece                          89                 
+ravi                        124 ece                          89                 
+vijay                       345 cse                          21                 
+raj                          98 it                           22                 
+
+SQL> create view v1 as select ename,enum from employee3;
+
+View created.
+
+SQL> select * from v1;
+
+ENAME                      ENUM                                                 
+-------------------- ----------                                                 
+ravi                        124                                                 
+ravi                        124                                                 
+vijay                       345                                                 
+raj                          98                                                 
+
+SQL> insert into v1 values('zaheer',190);
+
+1 row created.
+
+SQL> select * from v1;
+
+ENAME                      ENUM                                                 
+-------------------- ----------                                                 
+ravi                        124                                                 
+ravi                        124                                                 
+vijay                       345                                                 
+raj                          98                                                 
+zaheer                      190                                                 
+
+SQL> insert into employee3;
+insert into employee3
+                    *
+ERROR at line 1:
+ORA-00926: missing VALUES keyword 
+
+
+SQL> select * from employee3;
+
+ENAME                      ENUM DEPTNAME                DEPTNUM                 
+-------------------- ---------- -------------------- ----------                 
+ravi                        124 ece                          89                 
+ravi                        124 ece                          89                 
+vijay                       345 cse                          21                 
+raj                          98 it                           22                 
+zaheer                      190                                                 
+
+SQL> create view v2 as select deptnam,deptnum from employee3;
+create view v2 as select deptnam,deptnum from employee3
+                         *
+ERROR at line 1:
+ORA-00904: "DEPTNAM": invalid identifier 
+
+
+SQL> create view v2 as select deptname,deptnum from employee3;
+
+View created.
+
+SQL> select * from v2;
+
+DEPTNAME                DEPTNUM                                                 
+-------------------- ----------                                                 
+ece                          89                                                 
+ece                          89                                                 
+cse                          21                                                 
+it                           22                                                 
+                                                                                
+
+SQL> update v1 set enum=200 where ename ='zaheer';
+
+1 row updated.
+
+SQL> select * from v1;
+
+ENAME                      ENUM                                                 
+-------------------- ----------                                                 
+ravi                        124                                                 
+ravi                        124                                                 
+vijay                       345                                                 
+raj                          98                                                 
+zaheer                      200                                                 
+
+SQL> select * from employee3;
+
+ENAME                      ENUM DEPTNAME                DEPTNUM                 
+-------------------- ---------- -------------------- ----------                 
+ravi                        124 ece                          89                 
+ravi                        124 ece                          89                 
+vijay                       345 cse                          21                 
+raj                          98 it                           22                 
+zaheer                      200                                                 
+
+SQL> delete v1 where ename='ravi';
+
+2 rows deleted.
+
+SQL> select * from employee3;
+
+ENAME                      ENUM DEPTNAME                DEPTNUM                 
+-------------------- ---------- -------------------- ----------                 
+vijay                       345 cse                          21                 
+raj                          98 it                           22                 
+zaheer                      200                                                 
+
+SQL> select * from v1;
+
+ENAME                      ENUM                                                 
+-------------------- ----------                                                 
+vijay                       345                                                 
+raj                          98                                                 
+zaheer                      200                                                 
+
+SQL> select * from v2;
+
+DEPTNAME                DEPTNUM                                                 
+-------------------- ----------                                                 
+cse                          21                                                 
+it                           22                                                 
+                                                                                
+
+SQL> drop view v2;
+
+View dropped.
+
+SQL> select * from v2;
+select * from v2
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> spool off
